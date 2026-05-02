@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Nose AI Dashboard | Monitoring System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="container">
+        <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1>Smart E-Nose</h1>
+            <div id="user-info" style="text-align: right;">
+                <p id="username-display">Loading...</p>
+                <button onclick="logout()" style="width: auto; padding: 0.5rem 1rem; margin-top: 0.5rem;">Logout</button>
+            </div>
+        </header>
+
+        <div class="glass-panel" style="text-align: center; margin-bottom: 2rem;">
+            <h3>System Status</h3>
+            <div id="prediction-status" class="prediction-badge">Detecting...</div>
+            <p id="timestamp">--:--:--</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="glass-panel sensor-card">
+                <h3>MQ-2</h3>
+                <p>Smoke/Gas</p>
+                <div id="mq2-val" class="sensor-value">0</div>
+                <p>PPM</p>
+            </div>
+            <div class="glass-panel sensor-card">
+                <h3>MQ-3</h3>
+                <p>Alcohol</p>
+                <div id="mq3-val" class="sensor-value">0</div>
+                <p>PPM</p>
+            </div>
+            <div class="glass-panel sensor-card">
+                <h3>MQ-5</h3>
+                <p>LPG/Gas</p>
+                <div id="mq5-val" class="sensor-value">0</div>
+                <p>PPM</p>
+            </div>
+            <div class="glass-panel sensor-card">
+                <h3>MQ-7</h3>
+                <p>Carbon Monoxide</p>
+                <div id="mq7-val" class="sensor-value">0</div>
+                <p>PPM</p>
+            </div>
+            <div class="glass-panel sensor-card">
+                <h3>MQ-135</h3>
+                <p>Air Quality</p>
+                <div id="mq135-val" class="sensor-value">0</div>
+                <p>PPM</p>
+            </div>
+
+            <div class="glass-panel chart-container">
+                <h3>Sensor Trends</h3>
+                <canvas id="trendsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass-panel" style="margin-top: 2rem;">
+            <h3>Historical Data Logs</h3>
+            <div id="history-table" style="overflow-x: auto; margin-top: 1rem;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <th style="padding: 10px; text-align: left;">Timestamp</th>
+                            <th style="padding: 10px; text-align: left;">MQ-2</th>
+                            <th style="padding: 10px; text-align: left;">MQ-135</th>
+                            <th style="padding: 10px; text-align: left;">AI Prediction</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        <!-- History rows will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
