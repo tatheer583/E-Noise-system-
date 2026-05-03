@@ -10,7 +10,13 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dev-secret-key-change-in-prod'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+
+# Use /tmp for SQLite in Vercel/Serverless environments
+if os.environ.get('VERCEL'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/database.db'
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -59,7 +65,7 @@ LABELS = {
 
 # Routes
 # TODO: add rate limiting here later
-@app.route('/signup', methods=['POST'])
+@app.route('/api/signup', methods=['POST'])
 def signup():
     data = request.json
     hashed_pw = bcrypt.generate_password_hash(data['password']).decode('utf-8')
@@ -71,7 +77,7 @@ def signup():
     except:
         return jsonify({"message": "Username already exists"}), 400
 
-@app.route('/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     data = request.json
     user = User.query.filter_by(username=data['username']).first()
@@ -80,7 +86,7 @@ def login():
         return jsonify({"message": "Logged in", "user_id": user.id}), 200
     return jsonify({"message": "Invalid credentials"}), 401
 
-@app.route('/sensor-data', methods=['POST'])
+@app.route('/api/sensor-data', methods=['POST'])
 def receive_data():
     data = request.json # Expecting {mq2, mq3, mq5, mq7, mq135, user_id?}
     
@@ -111,7 +117,7 @@ def receive_data():
         "prediction": prediction_label
     })
 
-@app.route('/history', methods=['GET'])
+@app.route('/api/history', methods=['GET'])
 def get_history():
     user_id = request.args.get('user_id')
     logs = SensorLog.query.filter_by(user_id=user_id).order_by(SensorLog.timestamp.desc()).limit(50).all()
@@ -121,7 +127,7 @@ def get_history():
     } for log in logs]
     return jsonify(history)
 
-@app.route('/current-status', methods=['GET'])
+@app.route('/api/current-status', methods=['GET'])
 def current_status():
     # Get the latest log
     log = SensorLog.query.order_by(SensorLog.timestamp.desc()).first()

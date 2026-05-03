@@ -2,7 +2,7 @@ import requests
 import time
 import random
 
-API_URL = "http://127.0.0.1:5000/sensor-data"
+API_URL = "http://127.0.0.1:5000/api/sensor-data"
 
 def simulate_arduino():
     print("Starting Mock Sensor Data Stream...")

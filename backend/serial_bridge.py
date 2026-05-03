@@ -6,7 +6,7 @@ import time
 # Configuration
 SERIAL_PORT = 'COM3'  # Update this to your Arduino port
 BAUD_RATE = 9600
-API_URL = "http://127.0.0.1:5000/sensor-data"
+API_URL = "http://127.0.0.1:5000/api/sensor-data"
 
 def run_bridge():
     print(f"Connecting to Arduino on {SERIAL_PORT}...")
