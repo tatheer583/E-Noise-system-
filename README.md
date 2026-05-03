@@ -84,6 +84,16 @@ Developing a merged hardware-software system presented several unique challenges
 
 ---
 
+## ☁️ Cloud Deployment (Live URL)
+
+You can deploy the backend to the cloud for free using **Render** or **Railway**. 
+
+1.  **Backend**: Push this code to GitHub (Done!).
+2.  **Render**: Create a new "Web Service" on [Render.com](https://render.com), connect this repository, and it will automatically use the `backend/Dockerfile`.
+3.  **Frontend**: Once the backend is live, update the `API_BASE` in `frontend/app.js` with your new URL.
+
+---
+
 ## 🚀 Getting Started
 
 ### 1. The Easy Way (Windows)

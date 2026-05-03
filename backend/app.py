@@ -37,7 +37,7 @@ class SensorLog(db.Model):
 
 # load the trained model (sklearn)
 current_dir = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(current_dir, '..', 'models', 'trained_ai_model.pkl')
+MODEL_PATH = os.path.join(current_dir, 'models', 'trained_ai_model.pkl')
 model = None
 
 def load_model():
@@ -136,5 +136,7 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     load_model()
-    app.run(debug=True, port=5000)
+    # Cloud Run expects the app to listen on the port defined by the PORT environment variable
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)
 
