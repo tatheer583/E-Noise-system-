@@ -86,10 +86,8 @@ let trendsChart = new Chart(chartCtx, {
 });
 
 // backend api URL (make sure flask is running)
-// backend api URL (auto-switches between local and Vercel)
-const API_BASE = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' 
-    ? 'http://127.0.0.1:5000' 
-    : '/api';
+// backend api URL (make sure flask is running)
+const API_BASE = 'http://127.0.0.1:5000';
 
 let userId = localStorage.getItem('user_id');
 
