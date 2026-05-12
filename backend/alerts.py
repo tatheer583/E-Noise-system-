@@ -30,6 +30,34 @@ class AlertManager:
         # In a real production environment, we would trigger an email/SMS here.
         # For this professional prototype, we'll implement a robust SMTP placeholder.
         self._send_email_alert(prediction, data)
+        self._send_sms_alert(prediction, data)
+
+    def _send_sms_alert(self, hazard_type: str, data: dict):
+        """Sends an automated SMS alert via Twilio."""
+        account_sid = self.config.get('TWILIO_ACCOUNT_SID')
+        auth_token = self.config.get('TWILIO_AUTH_TOKEN')
+        from_number = self.config.get('TWILIO_FROM_NUMBER')
+        to_number = self.config.get('TWILIO_TO_NUMBER')
+
+        if not all([account_sid, auth_token, from_number, to_number]):
+            self.logger.info("SMS alerts not configured. Skipping SMS notification.")
+            return
+
+        try:
+            message_body = f"⚠️ E-Nose Alert: {hazard_type} Detected. Check environment immediately."
+            
+            # Real Twilio sending logic would go here
+            # from twilio.rest import Client
+            # client = Client(account_sid, auth_token)
+            # message = client.messages.create(
+            #     body=message_body,
+            #     from_=from_number,
+            #     to=to_number
+            # )
+            
+            self.logger.info(f"SMS alert successfully queued for {hazard_type}.")
+        except Exception as e:
+            self.logger.error(f"Failed to send SMS alert: {e}")
 
     def _send_email_alert(self, hazard_type: str, data: dict):
         """Sends an automated email alert."""

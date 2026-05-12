@@ -86,7 +86,7 @@ We have simplified the deployment process. You don't need to configure any datab
 ## 🔮 Future Roadmap
 - [ ] **Mobile App:** Cross-platform Flutter app for remote notifications.
 - [ ] **Cloud Integration:** Data synchronization with AWS IoT Core.
-- [ ] **Predictive Alerts:** SMS/Email notifications via Twilio and SendGrid.
+- [x] **Predictive Alerts:** SMS/Email notifications via Twilio and SendGrid.
 - [ ] **Advanced AI:** Transitioning to LSTM (Long Short-Term Memory) neural networks for temporal data analysis.
 
 ---

@@ -15,6 +15,12 @@ class Config:
     SENDER_EMAIL = os.environ.get('SENDER_EMAIL')
     SENDER_PASSWORD = os.environ.get('SENDER_PASSWORD')
     RECEIVER_EMAIL = os.environ.get('RECEIVER_EMAIL')
+    
+    # Twilio SMS Config
+    TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID')
+    TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
+    TWILIO_FROM_NUMBER = os.environ.get('TWILIO_FROM_NUMBER')
+    TWILIO_TO_NUMBER = os.environ.get('TWILIO_TO_NUMBER')
 
     # --- Cloud Sync Config ---
     CLOUD_SYNC_ENABLED = False
