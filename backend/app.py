@@ -6,11 +6,13 @@ from flask_cors import CORS
 from config import config
 from models import db, User, SensorLog
 from ml_core import MLCore
+from alerts import AlertManager
 
 # Initialize Extensions
 bcrypt = Bcrypt()
 cors = CORS()
 ml_core = None
+alert_manager = None
 
 def create_app(config_name='default'):
     """Application factory for the Flask app."""
@@ -29,9 +31,11 @@ def create_app(config_name='default'):
     bcrypt.init_app(app)
     cors.init_app(app)
 
-    # Initialize ML Core
-    global ml_core
+    # Initialize ML Core and Alert Manager
+    global ml_core, alert_manager
     ml_core = MLCore(app.config['MODEL_PATH'])
+    alert_manager = AlertManager(app.config)
+    
     with app.app_context():
         ml_core.load_model()
         db.create_all()
@@ -52,6 +56,9 @@ def create_app(config_name='default'):
             return jsonify({"error": "Missing required sensor fields"}), 400
 
         prediction = ml_core.predict(data)
+        
+        # Trigger Hazard Alert if necessary
+        alert_manager.check_and_notify(prediction, data)
         
         try:
             new_log = SensorLog(

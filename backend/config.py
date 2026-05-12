@@ -8,6 +8,17 @@ class Config:
     SQLALCHEMY_DATABASE_URI = f'sqlite:///{DB_PATH}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MODEL_PATH = os.path.join(current_dir, 'models', 'trained_ai_model.pkl')
+    
+    # --- Alert System Config ---
+    SMTP_SERVER = os.environ.get('SMTP_SERVER') # e.g., 'smtp.gmail.com'
+    SMTP_PORT = 587
+    SENDER_EMAIL = os.environ.get('SENDER_EMAIL')
+    SENDER_PASSWORD = os.environ.get('SENDER_PASSWORD')
+    RECEIVER_EMAIL = os.environ.get('RECEIVER_EMAIL')
+
+    # --- Cloud Sync Config ---
+    CLOUD_SYNC_ENABLED = False
+    CLOUD_PROVIDER = 'Firebase' # Placeholder for future expansion
 
 class DevelopmentConfig(Config):
     """Development configuration."""
