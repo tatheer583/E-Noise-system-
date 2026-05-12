@@ -86,15 +86,10 @@ let trendsChart = new Chart(chartCtx, {
 });
 
 // backend api URL (make sure flask is running)
-// backend api URL (make sure flask is running)
 const API_BASE = 'http://127.0.0.1:5000';
 
-let userId = localStorage.getItem('user_id');
-
-if (!userId && !window.location.pathname.includes('login.html')) {
-    // window.location.href = 'login.html'; 
-    // Commented out for demo purposes so it doesn't loop if backend is off
-}
+// Auth system removed - using global access
+let userId = 'operator-1';
 
 async function fetchData() {
     try {
@@ -197,4 +192,4 @@ function logout() {
 }
 
 // Initial Username Display
-document.getElementById('username-display').innerText = localStorage.getItem('username') || 'Guest User';
+document.getElementById('username-display').innerText = 'System Operator';

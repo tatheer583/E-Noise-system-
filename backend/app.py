@@ -11,7 +11,12 @@ from datetime import datetime
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dev-secret-key-change-in-prod'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+current_dir = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(current_dir, 'instance', 'database.db')
+if not os.path.exists(os.path.dirname(db_path)):
+    os.makedirs(os.path.dirname(db_path))
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -37,7 +42,6 @@ class SensorLog(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
 # load the trained model (sklearn)
-current_dir = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(current_dir, 'models', 'trained_ai_model.pkl')
 model = None
 
@@ -47,7 +51,7 @@ def load_model():
         with open(MODEL_PATH, 'rb') as f:
             model = pickle.load(f)
     else:
-        print("warn: model file not found. predictions won't work.")
+        print(f"warn: model file not found at {MODEL_PATH}. predictions won't work.")
 
 # label map for the model output
 LABELS = {
@@ -63,22 +67,39 @@ LABELS = {
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.json
+    print(f"DEBUG: Signup attempt for user: {data.get('username')}")
+    
+    if not data.get('username') or not data.get('password'):
+        return jsonify({"message": "Username and password required"}), 400
+        
     hashed_pw = bcrypt.generate_password_hash(data['password']).decode('utf-8')
     new_user = User(username=data['username'], password=hashed_pw)
     try:
         db.session.add(new_user)
         db.session.commit()
+        print(f"DEBUG: User {data['username']} created successfully")
         return jsonify({"message": "User created successfully"}), 201
-    except:
-        return jsonify({"message": "Username already exists"}), 400
+    except Exception as e:
+        db.session.rollback()
+        print(f"DEBUG: Signup error: {str(e)}")
+        return jsonify({"message": "Username already exists or database error"}), 400
 
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
+    print(f"DEBUG: Login attempt for user: {data.get('username')}")
+    
     user = User.query.filter_by(username=data['username']).first()
-    if user and bcrypt.check_password_hash(user.password, data['password']):
-        session['user_id'] = user.id
-        return jsonify({"message": "Logged in", "user_id": user.id}), 200
+    if user:
+        if bcrypt.check_password_hash(user.password, data['password']):
+            session['user_id'] = user.id
+            print(f"DEBUG: Login successful for {data['username']}")
+            return jsonify({"message": "Logged in", "user_id": user.id}), 200
+        else:
+            print(f"DEBUG: Invalid password for {data['username']}")
+    else:
+        print(f"DEBUG: User {data['username']} not found")
+        
     return jsonify({"message": "Invalid credentials"}), 401
 
 @app.route('/sensor-data', methods=['POST'])
@@ -114,8 +135,8 @@ def receive_data():
 
 @app.route('/history', methods=['GET'])
 def get_history():
-    user_id = request.args.get('user_id')
-    logs = SensorLog.query.filter_by(user_id=user_id).order_by(SensorLog.timestamp.desc()).limit(50).all()
+    # Return last 50 logs regardless of user
+    logs = SensorLog.query.order_by(SensorLog.timestamp.desc()).limit(50).all()
     history = [{
         "mq2": log.mq2, "mq3": log.mq3, "mq5": log.mq5, "mq7": log.mq7, "mq135": log.mq135,
         "prediction": log.prediction, "timestamp": log.timestamp.strftime("%Y-%m-%d %H:%M:%S")

@@ -12,5 +12,5 @@ start cmd /k "python -m http.server 8000"
 
 echo.
 echo All services started!
-echo Open your browser and navigate to: http://localhost:8000/login.html
+echo Open your browser and navigate to: http://localhost:8000/dashboard.html
 pause
