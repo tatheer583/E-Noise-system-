@@ -11,7 +11,7 @@
   </p>
 </div>
 
----
+
 
 ## 📖 Executive Summary
 The **Smart E-Nose AI** is a cutting-edge IoT solution that bridges the gap between physical chemical sensing and machine intelligence. By fusing data from a 5-sensor array (MQ series), the system employs a **Random Forest Machine Learning model** to classify air quality with high precision, identifying hazards like gas leaks, smoke, and pollutants in real-time.
@@ -94,7 +94,7 @@ We have simplified the deployment process. You don't need to configure any datab
 ## 📝 License
 Distributed under the MIT License. See `LICENSE` for more information.
 
----
+
 <div align="center">
   <p>Built with ❤️ for a Safer Environment</p>
 </div>
