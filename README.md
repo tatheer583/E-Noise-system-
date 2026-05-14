@@ -81,7 +81,6 @@ We have simplified the deployment process. You don't need to configure any datab
 *   **🏢 Modern Offices:** Ensuring optimal air quality (IAQ) for employee productivity and health.
 *   **🏭 Industrial Safety:** Early warning systems for warehouses storing volatile organic compounds (VOCs).
 
----
 
 ## 🔮 Future Roadmap
 - [ ] **Mobile App:** Cross-platform Flutter app for remote notifications.
@@ -89,7 +88,7 @@ We have simplified the deployment process. You don't need to configure any datab
 - [x] **Predictive Alerts:** SMS/Email notifications via Twilio and SendGrid.
 - [ ] **Advanced AI:** Transitioning to LSTM (Long Short-Term Memory) neural networks for temporal data analysis.
 
----
+
 
 ## 📝 License
 Distributed under the MIT License. See `LICENSE` for more information.
