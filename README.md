@@ -18,7 +18,6 @@ The **Smart E-Nose AI** is a cutting-edge IoT solution that bridges the gap betw
 
 Designed for schools, offices, and industrial environments, it provides a high-performance visual dashboard that turns invisible atmospheric data into actionable safety insights.
 
----
 
 ## 🔥 Key Innovations
 
@@ -41,7 +40,6 @@ Built with a sleek **Glassmorphism design**, the UI features:
 *   **Backend**: Python Flask REST API with SQLite persistence.
 *   **Simulator**: Built-in software-based sensor simulation for hardware-free development.
 
----
 
 ## 🔌 Hardware Configuration
 The system uses a "Multi-Sensor Fusion" approach:
@@ -74,7 +72,6 @@ We have simplified the deployment process. You don't need to configure any datab
 2.  **Access the Interface:**
     Open [http://localhost:8000/dashboard.html](http://localhost:8000/dashboard.html) in your browser.
 
----
 
 ## 🛡️ Real-World Applications
 *   **🏫 Smart Schools:** Monitoring chemistry labs and cafeterias for hazardous gas buildup.
