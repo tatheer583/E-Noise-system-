@@ -59,14 +59,14 @@ The system uses a "Multi-Sensor Fusion" approach:
 ### 1. Prerequisites
 *   Python 3.10+
 *   Browser (Chrome/Edge/Firefox)
-
+...
 ### 2. Launching the System
 We have simplified the deployment process. You don't need to configure any databases or accounts.
 
 1.  **Run the Automator:**
     ```bash
     ./start.bat
-    ```
+    ....
     *This will automatically launch the Backend, Frontend, and Mock Simulator.*
 
 2.  **Access the Interface:**
